@@ -41,10 +41,20 @@ From: alpine:latest
   # Install bam_aligner
   CARGO_INSTALL_ROOT=/usr/local cargo install --git https://github.com/stela2502/bam_aligner.git
 
+  # Install RustySparseMMX
+  CARGO_INSTALL_ROOT=/usr/local cargo install --git https://github.com/stela2502/RustySparseMMX.git
+  
+  # Install quantify_bam
+  CARGO_INSTALL_ROOT=/usr/local cargo install --git https://github.com/stela2502/quantify_bam.git
+
+  # Install bam_re_tagger
+  CARGO_INSTALL_ROOT=/usr/local cargo install --git https://github.com/stela2502/bam_re_tagger.git
+
+
   # Download the specific file from the Rustody repo
   curl -O https://github.com/stela2502/Rustody/min2//branch/filename
 
-  # Clean up (Alpine doesn't need as much cleaning up as Debian/Ubuntu)
+  # Clean up (Alpine does not need as much cleaning up as Debian/Ubuntu)
   rm -rf /var/cache/apk/*
 
 %environment
