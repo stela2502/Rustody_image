@@ -3,7 +3,7 @@
 # Path to your Singularity image
 SCRIPT_DIR="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 VERSION=1.0
-SINGULARITY_IMAGE="$SCRIPT_DIR/../Rustody_vi${VERSION}.sif"
+SINGULARITY_IMAGE="$SCRIPT_DIR/../Rustody_v${VERSION}.sif"
 
 # Check if a command was provided
 if [ "$#" -lt 1 ]; then
