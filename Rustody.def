@@ -47,7 +47,7 @@ From: alpine:latest
   CARGO_INSTALL_ROOT=/usr/local cargo install --git https://github.com/stela2502/RustySparseMMX.git
   
   # Install quantify_bam
-  CARGO_INSTALL_ROOT=/usr/local cargo install --git https://github.com/stela2502/quantify_bam.git
+  CARGO_INSTALL_ROOT=/usr/local cargo install --git https://github.com/stela2502/bam_tide.git
 
   # Install bam_re_tagger
   CARGO_INSTALL_ROOT=/usr/local cargo install --git https://github.com/stela2502/bam_re_tagger.git
