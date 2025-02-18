@@ -17,6 +17,8 @@ From: alpine:latest
       perl \
       make \
       linux-headers \
+      clang-dev \
+      llvm-dev \
 
   # Install Rust
   curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
