@@ -1,30 +1,34 @@
 Bootstrap: docker
-From: alpine:latest
+From: ubuntu:latest
 
 %post
-  # Update and install necessary packages using apk (Alpine package manager)
-  apk update && apk add --no-cache \
+  # Update and install necessary packages
+  apt update && apt install -y \
       bash \
       curl \
       gcc \
       clang \
-      musl-dev \
-      libressl-dev \
-      build-base \
+      libc6-dev \
+      libssl-dev \
+      llvm \
+      build-essential \
       cmake \
       git \
       cargo \
       perl \
       make \
-      linux-headers \
-      clang-dev \
+      linux-headers-generic \
       llvm-dev \
+      clang-14 \
+      libclang-dev \
+      libstdc++-12-dev
 
-  # Install Rust
+  # Install Rust (official installer)
   curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 
   # Ensure Rust is on the PATH
   export PATH="$HOME/.cargo/bin:$PATH"
+  echo 'export PATH="$HOME/.cargo/bin:$PATH"' >> ~/.bashrc
 
   # Create the target directory for Rust binaries
   mkdir -p /usr/local/bin
@@ -36,6 +40,9 @@ From: alpine:latest
   ./install_resources_unix.sh
   cd ..
   rm -Rf Rustody
+
+  # a really cool bigwig handling library:
+  CARGO_INSTALL_ROOT=/usr/local cargo install bigtools
 
   # Install build multi_subset_bam
   CARGO_INSTALL_ROOT=/usr/local cargo install --git https://github.com/stela2502/multi_subset_bam.git
