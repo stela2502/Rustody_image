@@ -7,13 +7,7 @@ SINGULARITY_IMAGE="$SCRIPT_DIR/../Rustody_v${VERSION}.sif"
 
 # Check if a command was provided
 if [ "$#" -lt 1 ]; then
-  echo "Usage: Rustody <command> [options...]"
-  echo "With commands being described there 
-  https://github.com/stela2502/Rustody 
-  https://github.com/stela2502/bam_aligner
-  https://github.com/stela2502/subset_bam
-  https://github.com/stela2502/RustySparseMMX
-  "
+  singularity exec "$SINGULARITY_IMAGE" "image_cli"
   exit 1
 fi
 

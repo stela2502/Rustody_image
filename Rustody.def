@@ -14,7 +14,6 @@ From: ubuntu:latest
       build-essential \
       cmake \
       git \
-      cargo \
       perl \
       make \
       linux-headers-generic \
@@ -23,12 +22,12 @@ From: ubuntu:latest
       libclang-dev \
       libstdc++-12-dev
 
-  # Install Rust (official installer)
   curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 
-  # Ensure Rust is on the PATH
   export PATH="$HOME/.cargo/bin:$PATH"
   echo 'export PATH="$HOME/.cargo/bin:$PATH"' >> ~/.bashrc
+
+  rustup update 
 
   # Create the target directory for Rust binaries
   mkdir -p /usr/local/bin
@@ -40,9 +39,18 @@ From: ubuntu:latest
   ./install_resources_unix.sh
   cd ..
   rm -Rf Rustody
+  
+  # install the image_cli not in /usr/local, but in /usr
+  CARGO_INSTALL_ROOT=/usr cargo install --git https://github.com/stela2502/image_cli
 
   # a really cool bigwig handling library:
   CARGO_INSTALL_ROOT=/usr/local cargo install bigtools
+
+  # the 10x bamtofastq
+  CARGO_INSTALL_ROOT=/usr/local cargo install --git https://github.com/10XGenomics/bamtofastq.git
+
+  #my rust-geo-prep
+  CARGO_INSTALL_ROOT=/usr/local cargo install --git https://github.com/stela2502/rust-geo-prep.git
 
   # Install build multi_subset_bam
   CARGO_INSTALL_ROOT=/usr/local cargo install --git https://github.com/stela2502/multi_subset_bam.git
@@ -55,10 +63,14 @@ From: ubuntu:latest
   
   # Install quantify_bam
   CARGO_INSTALL_ROOT=/usr/local cargo install --git https://github.com/stela2502/bam_tide.git
+  mkdir -p /usr/local/share/bam_tide
+  curl -L -o /usr/local/share/bam_tide/whitelist_map.bin https://raw.githubusercontent.com/stela2502/bam_tide/main/data/whitelist_map.bin
 
   # Install bam_re_tagger
   CARGO_INSTALL_ROOT=/usr/local cargo install --git https://github.com/stela2502/bam_re_tagger.git
 
+  # Install regionomics
+  CARGO_INSTALL_ROOT=/usr/local cargo install --git https://github.com/stela2502/regionomics.git
 
   # Download the specific file from the Rustody repo
   curl -O https://github.com/stela2502/Rustody/min2//branch/filename

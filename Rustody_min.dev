@@ -1,0 +1,31 @@
+Bootstrap: docker
+From: ubuntu:latest
+
+%post
+  mkdir -p /mnt/data1
+  # Update and install necessary packages
+  apt update && apt install -y \
+      bash \
+      curl \
+      gcc \
+      clang \
+      libc6-dev \
+      libssl-dev \
+      llvm \
+      build-essential \
+      cmake \
+      git \
+      perl \
+      rustup \
+      make \
+      linux-headers-generic \
+      llvm-dev \
+      clang-14 \
+      libclang-dev \
+      libstdc++-12-dev
+
+
+%environment
+  export PATH="/usr/local/bin:$PATH"
+  export RustodyFiles="/opt/Rustody_files"
+

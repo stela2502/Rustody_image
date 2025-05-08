@@ -37,7 +37,7 @@ whatis("Installed on : 22/08/2024")
 whatis("Modified on  : --- ")
 whatis("Installed by : stefanl")
 
-family("images")
+family("chipanalysisimage")
 
 EOF
 

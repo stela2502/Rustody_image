@@ -26,6 +26,7 @@ restart:
 	else \
 		echo "Creating new sandbox..."; \
 	fi
+	unset SINGULARITY_BIND
 	sudo apptainer build --sandbox $(SANDBOX_DIR) $(DEFINITION_FILE)
 
 # Build the .sif image from the definition file or sandbox
@@ -42,11 +43,10 @@ deploy:
 	@if [ ! -f $(MODULE_FILE) ]; then \
            $(CURDIR)/generate_module.sh $(SERVER_DIR) $(VERSION) $(SANDBOX_DIR) > $(MODULE_FILE);\
 	   mkdir -p $(DEPLOY_DIR)/bin; \
-	   cp $(CURDIR)/bin/Rustody $(DEPLOY_DIR)/bin; \
-	   sed -i 's/^VERSION=.*/VERSION=${VERSION}/' $(DEPLOY_DIR)/bin/Rustody \
-	   chmod +x $(DEPLOY_DIR)/bin/Rustody; \
+	   cp $(CURDIR)/bin/* $(DEPLOY_DIR)/bin/; \
+	   sed -i 's/^VERSION=.*/VERSION=${VERSION}/' $(DEPLOY_DIR)/bin/Rustody ; \
+	   chmod +x $(DEPLOY_DIR)/bin/*; \
 	fi
-
 
 # Clean up the sandbox and image
 clean:
