@@ -3,3 +3,5 @@ Rustody_mini/
 Rustody_save/
 Rustody_alpine.def
 *.sif
+.generate_module.sh.swp
+Rustody_min/
