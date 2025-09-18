@@ -7,7 +7,7 @@ SINGULARITY_IMAGE="$SCRIPT_DIR/../Rustody_v${VERSION}.sif"
 
 # Check if a command was provided
 if [ "$#" -lt 1 ]; then
-  singularity exec "$SINGULARITY_IMAGE" "image_cli"
+  singularity exec "$SINGULARITY_IMAGE" "image_cli -w Rustody"
   exit 1
 fi
 

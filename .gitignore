@@ -5,3 +5,5 @@ Rustody_alpine.def
 *.sif
 .generate_module.sh.swp
 Rustody_min/
+.crates*
+build-temp*

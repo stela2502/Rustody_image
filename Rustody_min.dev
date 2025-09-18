@@ -2,7 +2,6 @@ Bootstrap: docker
 From: ubuntu:latest
 
 %post
-  mkdir -p /mnt/data1
   # Update and install necessary packages
   apt update && apt install -y \
       bash \
@@ -16,7 +15,6 @@ From: ubuntu:latest
       cmake \
       git \
       perl \
-      rustup \
       make \
       linux-headers-generic \
       llvm-dev \
@@ -24,8 +22,28 @@ From: ubuntu:latest
       libclang-dev \
       libstdc++-12-dev
 
+  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+
+  export PATH="$HOME/.cargo/bin:$PATH"
+  echo 'export PATH="$HOME/.cargo/bin:$PATH"' >> ~/.bashrc
+
+  rustup update 
+
+  # Create the target directory for Rust binaries
+  mkdir -p /usr/local/bin
+
+  # install the image_cli not in /usr/local, but in /usr
+  CARGO_INSTALL_ROOT=/usr cargo install --git https://github.com/stela2502/image_cli
+
+  # Install quantify_bam
+  CARGO_INSTALL_ROOT=/usr/local cargo install --git https://github.com/stela2502/bam_tide.git
+  mkdir -p /usr/local/share/bam_tide
+  curl -L -o /usr/local/share/bam_tide/whitelist_map.bin https://raw.githubusercontent.com/stela2502/bam_tide/main/data/whitelist_map.bin
+
+  # Clean up (Alpine does not need as much cleaning up as Debian/Ubuntu)
+  rm -rf /var/cache/apk/*
 
 %environment
   export PATH="/usr/local/bin:$PATH"
   export RustodyFiles="/opt/Rustody_files"
-
+  export PATH="/root/.cargo/bin:$PATH"

@@ -1,5 +1,5 @@
 # Variables
-VERSION := 1.4
+VERSION := 1.5
 IMAGE_NAME := Rustody_v$(VERSION).sif
 SANDBOX_DIR := Rustody
 DEFINITION_FILE := Rustody.def
@@ -11,6 +11,22 @@ MODULE_FILE := $(HOME)/sens05_shared/common/modules/$(SANDBOX_DIR)/$(VERSION).lu
 
 # Path on COSMOS where the image will be stored
 SERVER_DIR := /scale/gr01/shared/common/software/$(SANDBOX_DIR)/$(VERSION)
+
+# ==== configuration ====
+BIN_DIR := ./        # where the executables will end up
+TARGET  := x86_64-unknown-linux-musl
+REPOS   := \
+    https://github.com/stela2502/Rustody.git \
+    https://github.com/stela2502/rust-geo-prep.git \
+    https://github.com/stela2502/multi_subset_bam.git \
+    https://github.com/stela2502/bam_aligner.git \
+    https://github.com/stela2502/RustySparseMMX.git \
+    https://github.com/stela2502/bam_tide.git \
+    https://github.com/stela2502/bam_re_tagger.git \
+    https://github.com/stela2502/regionomics.git \
+    https://github.com/stela2502/image_cli.git
+
+NAMES   := $(notdir $(basename $(REPOS)))
 
 # Phony targets are not actual files, but represent actions
 .PHONY: all restart build deploy clean
@@ -53,4 +69,10 @@ clean:
 	@echo "Cleaning up..."
 	sudo rm -rf $(SANDBOX_DIR)
 	sudo rm -f $(IMAGE_NAME)
-
+static_binaries:
+	@mkdir -p $(BIN_DIR)
+	@for repo in $(REPOS); do \
+	    echo "===> Installing $$repo to $(TARGET)"; \
+	    cargo install --git $$repo --target $(TARGET) --root $(BIN_DIR); \
+	done
+	

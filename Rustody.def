@@ -39,7 +39,21 @@ From: ubuntu:latest
   ./install_resources_unix.sh
   cd ..
   rm -Rf Rustody
-  
+ 
+  TARGET=x86_64-unknown-linux-musl
+  for repo in \
+    https://github.com/stela2502/Rustody.git \
+    https://github.com/stela2502/rust-geo-prep.git \
+    https://github.com/stela2502/multi_subset_bam.git \
+    https://github.com/stela2502/bam_aligner.git \
+    https://github.com/stela2502/RustySparseMMX.git \
+    https://github.com/stela2502/bam_tide.git \
+    https://github.com/stela2502/bam_re_tagger.git \
+    https://github.com/stela2502/regionomics.git 
+  do
+    cargo install --git "$repo" --target "$TARGET" --root /usr/local
+  done
+
   # install the image_cli not in /usr/local, but in /usr
   CARGO_INSTALL_ROOT=/usr cargo install --git https://github.com/stela2502/image_cli
 
@@ -81,4 +95,4 @@ From: ubuntu:latest
 %environment
   export PATH="/usr/local/bin:$PATH"
   export RustodyFiles="/opt/Rustody_files"
-
+  export PATH="/root/.cargo/bin:$PATH"
